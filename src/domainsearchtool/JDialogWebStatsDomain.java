@@ -1,0 +1,438 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package domainsearchtool;
+
+import Entity.OrganicKeywordsObject;
+import Entity.SocialActivityObject;
+import Entity.WebStatsDomainObject;
+import Util.FormatNumberCellRenderer;
+import java.awt.Toolkit;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author vutran
+ */
+public class JDialogWebStatsDomain extends javax.swing.JDialog
+{
+    /**
+     * Creates new form JDialogWebStatsDomain
+     */
+    public JDialogWebStatsDomain(java.awt.Frame parent, boolean modal,
+            WebStatsDomainObject oWebStats, String sDomain)
+    {
+        super(parent, modal);
+        initComponents();
+        this.setTitle("Web stats domain: [" + sDomain + "]");
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(JFrameMain.class.getResource("icon.png")));
+        ConfigTable();
+        SetText(oWebStats);
+        SetSocialActivity(oWebStats);
+        AddRowsToTable(oWebStats);
+    }
+    
+    private void SetText(WebStatsDomainObject oWebStats)
+    {
+        jLabWebsiteWorth.setText((oWebStats.getsWebsiteWorth() == null || oWebStats.getsWebsiteWorth().length() == 0
+                || oWebStats.getsWebsiteWorth().equals("n\\a"))  ? oWebStats.getsWebsiteWorth() : oWebStats.getsWebsiteWorth() + " USD");
+        jLabSeoScore.setText((oWebStats.getsSeoScore() == null || oWebStats.getsSeoScore().length() == 0
+                || oWebStats.getsSeoScore().equals("n\\a"))  ? oWebStats.getsSeoScore() : oWebStats.getsSeoScore() + " %");
+        jLabDateRegistered.setText((oWebStats.getsDateRegistered() == null || oWebStats.getsDateRegistered().length() == 0
+                || oWebStats.getsDateRegistered().equals("n\\a"))  ? oWebStats.getsDateRegistered() : oWebStats.getsDateRegistered());
+        jLabSiteAge.setText((oWebStats.getsSiteAge() == null || oWebStats.getsSiteAge().length() == 0
+                || oWebStats.getsSiteAge().equals("n\\a"))  ? oWebStats.getsSiteAge() : oWebStats.getsSiteAge());
+    }
+    private void SetSocialActivity(WebStatsDomainObject oWebStats)
+    {
+        JLabel[] arrSocialNames = {jLabSocialName_01, jLabSocialName_02, jLabSocialName_03,
+            jLabSocialName_04, jLabSocialName_05};
+        JLabel[] arrSocialValues = {jLabSocialValue_01, jLabSocialValue_02, jLabSocialValue_03,
+            jLabSocialValue_04, jLabSocialValue_05};
+        List<SocialActivityObject> list = oWebStats.getListSocial();
+//        System.out.println("List size: " + list.size());
+        for(int i = 0; i < arrSocialNames.length; i++)
+        {
+            if(i == list.size())
+            {
+                break;
+            }
+            SocialActivityObject oSocial = list.get(i);
+            arrSocialNames[i].setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(JFrameMain.class.getResource(oSocial.getsImageName()))));
+            arrSocialNames[i].setText(oSocial.getsSocialName());
+            arrSocialValues[i].setText(oSocial.getsValue());
+        }
+    }
+    private void ConfigTable()
+    {
+        String[] arrColName =
+        {
+            "Keyword", "Url", "Total Result", "Position", "Last Checked"
+        };
+        DefaultTableModel model = new DefaultTableModel();
+        for(String s : arrColName)
+        {
+            model.addColumn(s);
+        }
+        jTabItem.setModel(model);
+        jTabItem.getColumnModel().getColumn(0).setPreferredWidth(140);
+        jTabItem.getColumnModel().getColumn(1).setPreferredWidth(150);
+        jTabItem.getColumnModel().getColumn(2).setPreferredWidth(70);
+        jTabItem.getColumnModel().getColumn(3).setPreferredWidth(50);
+        jTabItem.getColumnModel().getColumn(4).setPreferredWidth(80);
+        
+        jTabItem.getColumnModel().getColumn(2).setCellRenderer(FormatNumberCellRenderer.PositionRenderer(2));
+        jTabItem.getColumnModel().getColumn(3).setCellRenderer(FormatNumberCellRenderer.PositionRenderer(1));
+        jTabItem.getColumnModel().getColumn(4).setCellRenderer(FormatNumberCellRenderer.PositionRenderer(1));
+    }
+
+    private void AddRowsToTable(WebStatsDomainObject oWebStats)
+    {
+        DefaultTableModel model = (DefaultTableModel) jTabItem.getModel();
+        List<OrganicKeywordsObject> list = oWebStats.getListOrganic();
+        if(list == null)
+        {
+            return;
+        }
+        for (OrganicKeywordsObject oOrganic : list)
+        {
+            Object[] arrRow =
+            {
+                oOrganic.getsKeyword(), oOrganic.getsUrl(), oOrganic.getsTotalResult(),
+                oOrganic.getsPosition(), oOrganic.getsLastChecked()
+            };
+            model.addRow(arrRow);
+        }
+        jTabItem.setModel(model);
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents()
+    {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jBtnClose = new javax.swing.JButton();
+        jLabWebsiteWorth = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabSeoScore = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabDateRegistered = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabSiteAge = new javax.swing.JLabel();
+        jLabSocialName_01 = new javax.swing.JLabel();
+        jLabSocialValue_01 = new javax.swing.JLabel();
+        jLabSocialName_04 = new javax.swing.JLabel();
+        jLabSocialValue_04 = new javax.swing.JLabel();
+        jLabSocialName_03 = new javax.swing.JLabel();
+        jLabSocialValue_03 = new javax.swing.JLabel();
+        jLabSocialName_02 = new javax.swing.JLabel();
+        jLabSocialValue_02 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabSocialName_05 = new javax.swing.JLabel();
+        jLabSocialValue_05 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTabItem = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Website Worth:");
+
+        jBtnClose.setText("Close");
+        jBtnClose.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBtnCloseActionPerformed(evt);
+            }
+        });
+
+        jLabWebsiteWorth.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabWebsiteWorth.setForeground(new java.awt.Color(255, 255, 255));
+        jLabWebsiteWorth.setText("Website Worth:");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("SEO Score:");
+
+        jLabSeoScore.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSeoScore.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSeoScore.setText("SEO Score");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Date Registered:");
+
+        jLabDateRegistered.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabDateRegistered.setForeground(new java.awt.Color(255, 255, 255));
+        jLabDateRegistered.setText("Date registered");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Site Age:");
+
+        jLabSiteAge.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSiteAge.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSiteAge.setText("Site Age");
+
+        jLabSocialName_01.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialName_01.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialName_01.setText("Social name 01");
+
+        jLabSocialValue_01.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialValue_01.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialValue_01.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabSocialValue_01.setText("Social value 01");
+
+        jLabSocialName_04.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialName_04.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialName_04.setText("Social name 04");
+
+        jLabSocialValue_04.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialValue_04.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialValue_04.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabSocialValue_04.setText("Social value 04");
+
+        jLabSocialName_03.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialName_03.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialName_03.setText("Social name 03");
+
+        jLabSocialValue_03.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialValue_03.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialValue_03.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabSocialValue_03.setText("Social value 03");
+
+        jLabSocialName_02.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialName_02.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialName_02.setText("Social name 02");
+
+        jLabSocialValue_02.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialValue_02.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialValue_02.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabSocialValue_02.setText("Social value 02");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Social Activity:");
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setOpaque(true);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Organic Keywords:");
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setOpaque(true);
+
+        jLabSocialName_05.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialName_05.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialName_05.setText("Social name 05");
+
+        jLabSocialValue_05.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabSocialValue_05.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSocialValue_05.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabSocialValue_05.setText("Social value 05");
+
+        jTabItem.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+
+            },
+            new String []
+            {
+
+            }
+        ));
+        jTabItem.setPreferredSize(new java.awt.Dimension(305, 64));
+        jTabItem.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTabItem.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTabItem);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabSocialName_01, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabSocialName_05, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(18, 18, 18)))
+                                    .addGap(10, 10, 10))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabSocialName_02, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabSocialName_03, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(28, 28, 28)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabSocialName_04, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabDateRegistered)
+                            .addComponent(jLabSeoScore)
+                            .addComponent(jLabSiteAge, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabSocialValue_05, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                                .addComponent(jLabSocialValue_04, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabSocialValue_03, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabSocialValue_02, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabSocialValue_01, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabWebsiteWorth, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(32, Short.MAX_VALUE))))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabSocialName_01, jLabSocialName_02, jLabSocialName_03, jLabSocialName_04, jLabSocialName_05});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabDateRegistered, jLabSeoScore, jLabSiteAge, jLabWebsiteWorth});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabWebsiteWorth))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabSeoScore))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabDateRegistered))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabSiteAge))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabSocialName_01, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabSocialValue_01))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabSocialName_02, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabSocialValue_02))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabSocialName_03, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabSocialValue_03))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabSocialName_04, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabSocialValue_04))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabSocialName_05, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabSocialValue_05))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBtnClose)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabDateRegistered, jLabSeoScore, jLabSiteAge, jLabSocialName_01, jLabSocialName_02, jLabSocialName_03, jLabSocialName_04, jLabSocialName_05, jLabSocialValue_01, jLabSocialValue_02, jLabSocialValue_03, jLabSocialValue_04, jLabSocialValue_05, jLabWebsiteWorth, jLabel1, jLabel2, jLabel3, jLabel4});
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        java.awt.Dimension dialogSize = getSize();
+        setLocation((screenSize.width-dialogSize.width)/2,(screenSize.height-dialogSize.height)/2);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnCloseActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnCloseActionPerformed
+    {//GEN-HEADEREND:event_jBtnCloseActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBtnCloseActionPerformed
+
+   
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnClose;
+    private javax.swing.JLabel jLabDateRegistered;
+    private javax.swing.JLabel jLabSeoScore;
+    private javax.swing.JLabel jLabSiteAge;
+    private javax.swing.JLabel jLabSocialName_01;
+    private javax.swing.JLabel jLabSocialName_02;
+    private javax.swing.JLabel jLabSocialName_03;
+    private javax.swing.JLabel jLabSocialName_04;
+    private javax.swing.JLabel jLabSocialName_05;
+    private javax.swing.JLabel jLabSocialValue_01;
+    private javax.swing.JLabel jLabSocialValue_02;
+    private javax.swing.JLabel jLabSocialValue_03;
+    private javax.swing.JLabel jLabSocialValue_04;
+    private javax.swing.JLabel jLabSocialValue_05;
+    private javax.swing.JLabel jLabWebsiteWorth;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTabItem;
+    // End of variables declaration//GEN-END:variables
+}

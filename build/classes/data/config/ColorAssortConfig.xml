@@ -1,0 +1,14 @@
+<colorassortionobjectlist>
+  <colorassortionobject>
+    <iColumnId>1</iColumnId>
+    <sColumnName>Google Pagerank</sColumnName>
+    <iFromValue>1</iFromValue>
+    <iToValue>6</iToValue>
+    <oColor>
+      <red>255</red>
+      <green>204</green>
+      <blue>204</blue>
+      <alpha>255</alpha>
+    </oColor>
+  </colorassortionobject>
+</colorassortionobjectlist>
